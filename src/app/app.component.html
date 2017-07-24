@@ -1,0 +1,12 @@
+<h1>
+  Welcome to {{title}}!
+</h1>
+<h2>{{msg}}</h2>
+<h3>{{coordinates | json}}</h3>
+<div *ngIf="coordinates.length > 1">
+  <button type="button" (click)="clear()">Clear</button>
+  <div *ngFor="let step of routes?.legs[0].steps">
+    <p [innerHTML]="step.html_instructions"></p>
+  </div>
+</div>
+<div id="map" class="map"></div>elo
