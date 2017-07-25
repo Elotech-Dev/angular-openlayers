@@ -4,5 +4,11 @@
     "logLevel": "debug",
     "secure": false,
     "changeOrigin": true
+  },
+  "/v1/*": {
+    "target": "https://roads.googleapis.com",
+    "logLevel": "debug",
+    "secure": false,
+    "changeOrigin": true
   }
 }

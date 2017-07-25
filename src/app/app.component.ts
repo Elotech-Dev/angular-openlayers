@@ -1,5 +1,6 @@
 import { Http, Headers } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 const ol = require('openlayers');
 
@@ -10,7 +11,12 @@ const ol = require('openlayers');
 })
 export class AppComponent implements OnInit {
 
-  private static GOOGLE_MAPS_URL = 'maps/api/directions/json?key=AIzaSyC1A9BlCRU5r-u4O6VsPmHMjpAVlN4zcOk';
+  private static API_KEY = 'AIzaSyAPWRnUuIp7RA1fBI7gMWYsAzMZn2HIsCM';
+
+  private static GOOGLE_MAPS_URL = `maps/api/directions/json?key=${AppComponent.API_KEY}`;
+
+  private static GOOGLE_ROADS_URL = `v1/nearestRoads?key=${AppComponent.API_KEY}`;
+
 
   private static ROUTE_STYLE = new ol.style.Style({
     stroke: new ol.style.Stroke({
@@ -34,6 +40,7 @@ export class AppComponent implements OnInit {
 
   private map: any;
   private vectorSource: any;
+  private roadsSubscription: Subscription;
 
 
   constructor(private http: Http) { }
@@ -60,39 +67,8 @@ export class AppComponent implements OnInit {
     });
 
 
-    this.map.on('click', evt => {
+    this.map.on('click', evt => this.handleClick(evt));
 
-      if (this.coordinates.length < 2) {
-
-        this.createPlace(evt.coordinate);
-
-        this.coordinates.push(this.coordinateToLatLog(evt.coordinate));
-
-        if (this.coordinates.length > 1) {
-          this.msg = 'Calculating route...';
-
-          this.http.get(`${AppComponent.GOOGLE_MAPS_URL}&origin=${this.coordinates[0]}&destination=${this.coordinates[1]}`)
-            .subscribe(resp => this.handle(resp));
-
-
-        } else {
-          this.msg = 'Select target...';
-        }
-
-      }
-
-    });
-
-  }
-
-  createPlace(coord) {
-    const place = new ol.Feature({
-      type: 'place',
-      geometry: new ol.geom.Point(coord)
-    });
-    place.setStyle(AppComponent.PLACE_STYLE);
-
-    this.vectorSource.addFeature(place);
   }
 
   clear() {
@@ -102,15 +78,65 @@ export class AppComponent implements OnInit {
     this.resp = null;
   }
 
-  private coordinateToLatLog(coordinate) {
 
-    const points = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
 
-    return [points[1], points[0]];
+  private handleClick(evt) {
+
+    if ((!this.roadsSubscription || this.roadsSubscription.closed) && this.coordinates.length < 2) {
+
+      const latLog = this.coordinateToLatLog(evt.coordinate);
+
+      this.roadsSubscription = this.http.get(`${AppComponent.GOOGLE_ROADS_URL}&points=${latLog}`)
+        .subscribe(resp => {
+
+          const point = resp.json();
+
+          const location = point.snappedPoints[0].location;
+
+          this.createPlace([location.longitude, location.latitude]);
+
+          this.addPlace([location.latitude, location.longitude]);
+
+        });
+
+
+    }
 
   }
 
-  private handle(response) {
+
+  private addPlace(latLog) {
+
+    this.coordinates.push(latLog);
+
+    if (this.coordinates.length > 1) {
+      this.msg = 'Calculating route...';
+
+      this.http.get(`${AppComponent.GOOGLE_MAPS_URL}&origin=${this.coordinates[0]}&destination=${this.coordinates[1]}`)
+        .subscribe(resp => this.handleResponse(resp));
+
+    } else {
+      this.msg = 'Select target...';
+    }
+
+  }
+
+  private createPlace(latLog) {
+    const place = new ol.Feature({
+      type: 'place',
+      geometry: new ol.geom.Point(ol.proj.fromLonLat(latLog))
+    });
+    place.setStyle(AppComponent.PLACE_STYLE);
+    this.vectorSource.addFeature(place);
+  }
+
+
+  private coordinateToLatLog(coordinate) {
+    const points = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+    return [points[1], points[0]];
+  }
+
+  private handleResponse(response) {
     this.resp = response.json();
     this.routes = null;
     if (this.resp.routes.length > 0) {
@@ -131,9 +157,7 @@ export class AppComponent implements OnInit {
       type: 'route',
       geometry: route
     });
-
     feature.setStyle(AppComponent.ROUTE_STYLE);
-
     this.vectorSource.addFeature(feature);
   }
 
