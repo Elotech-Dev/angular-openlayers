@@ -12,11 +12,18 @@ export class AppComponent implements OnInit {
 
   private static GOOGLE_MAPS_URL = 'maps/api/directions/json?key=AIzaSyC1A9BlCRU5r-u4O6VsPmHMjpAVlN4zcOk';
 
-  private static ROUTE_STYPE = new ol.style.Style({
+  private static ROUTE_STYLE = new ol.style.Style({
     stroke: new ol.style.Stroke({
       width: 6, color: [40, 40, 40, 0.8]
     })
   });
+
+  private static PLACE_STYLE  = new ol.style.Style({
+        image: new ol.style.Icon({
+          anchor: [0.5, 1],
+          src: '//cdn.rawgit.com/openlayers/ol3/master/examples/data/icon.png'
+        })
+      });
 
   title = '';
   msg = '';
@@ -57,7 +64,7 @@ export class AppComponent implements OnInit {
 
       if (this.coordinates.length < 2) {
 
-        this.createFeature(evt.coordinate);
+        this.createPlace(evt.coordinate);
 
         this.coordinates.push(this.coordinateToLatLog(evt.coordinate));
 
@@ -78,11 +85,12 @@ export class AppComponent implements OnInit {
 
   }
 
-  createFeature(coord) {
+  createPlace(coord) {
     const place = new ol.Feature({
       type: 'place',
       geometry: new ol.geom.Point(coord)
     });
+    place.setStyle(AppComponent.PLACE_STYLE);
 
     this.vectorSource.addFeature(place);
   }
@@ -126,7 +134,7 @@ export class AppComponent implements OnInit {
       geometry: route
     });
 
-    feature.setStyle(AppComponent.ROUTE_STYPE);
+    feature.setStyle(AppComponent.ROUTE_STYLE);
 
     this.vectorSource.addFeature(feature);
   }

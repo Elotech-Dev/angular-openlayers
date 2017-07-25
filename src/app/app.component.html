@@ -5,8 +5,11 @@
 <h3>{{coordinates | json}}</h3>
 <div *ngIf="coordinates.length > 1">
   <button type="button" (click)="clear()">Clear</button>
+  <div>Total</div>
+  <div [innerHTML]="routes?.legs[0].distance.text"></div>
   <div *ngFor="let step of routes?.legs[0].steps">
-    <p [innerHTML]="step.html_instructions"></p>
+    <div [innerHTML]="step.html_instructions"></div>
+    <div [innerHTML]="step.distance.text"></div>
   </div>
 </div>
 <div id="map" class="map"></div>elo

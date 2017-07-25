@@ -1,242 +1,42 @@
-######################
-# Project Specific
-######################
-/src/main/webapp/content/css/main.css
-/build/www/**
-client/common/css/vendor.bundle.css
-client/common/js/vendor.bundle.js
-/client/template2/web
-/bootstrap.bat
-/angular2/src/favicon.ico
-*.pid
-*.port
-*.root
-bundle-stats.json
-/install/war/**
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-######################
-# Node
-######################
-/node/**
-node_modules
-bower_components
-npm-debug*
+# compiled output
+/dist
+/tmp
+/out-tsc
 
-######################
-# SASS
-######################
-.sass-cache/**
+# dependencies
+/node_modules
 
-######################
-# Eclipse
-######################
-*.pydevproject
+# IDEs and editors
+/.idea
 .project
-.settings
-.metadata
-.factorypath
-*.cache-*
-/tmp/**
-/tmp/**/*
-*.tmp
-*.bak
-*.swp
-*.exe
-*~.nib
-local.properties
 .classpath
-.settings/**
-.loadpath
-/src/main/resources/rebel.xml
-/build/
-
-# External tool builders
-.externalToolBuilders/**
-
-# Locally stored "Eclipse launch configurations"
+.c9/
 *.launch
-
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
-
-######################
-# Intellij
-######################
-.idea/**
-*.iml
-*.iws
-*.ipr
-*.ids
-*.orig
-
-######################
-# Maven
-######################
-/log/**
-/target/**
-
-######################
-# Gradle
-######################
-.gradle/**
-
-######################
-# Package Files
-######################
-*.jar
-*.war
-*.ear
-*.db
-/install/client/**/html
-
-######################
-# Windows
-######################
-# Windows image file caches
-Thumbs.db
-/desktop.ini
-
-# Folder config file
-Desktop.ini
-
-######################
-# Mac OSX
-######################
-.DS_Store
-.svn
-
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-######################
-# Directories
-######################
-**/server/**/build/**
-**/server/**/bin/**
-/server/crystal-engine/*.csv
-**/src/main/generated/**
-server/unico/dist/jre
-/spring_loaded/**
-/deploy/**
-/seed/build/**
-/seed/bin/**
-/client/**/dist
-angular2/**/dist
-angular2/**/coverage
-angular2/.idea
-client/.idea
-angular2/src/less
-angular2/src/img
-angular2/src/fonts
-angular2/.angular-cli.json
-client/**/coverage
-
-######################
-# Logs
-######################
-*.log
-server/**/logs/
-
-######################
-# Others
-######################
-*.class
-*.*~
-*~
-.merge_file*
-server/unico/joins/
-
-######################
-# Gradle Wrapper
-######################
-!gradle/wrapper/gradle-wrapper.jar
-
-######################
-# Maven Wrapper
-######################
-!.mvn/wrapper/maven-wrapper.jar
-
-######################
-# ESLint
-######################
-.eslintcache
-
-######################
-# Sublime Text
-######################
+.settings/
 *.sublime-workspace
-.h2.server.properties
 
-######################
-# Test Resources
-######################
-*.pdf
-brasaoTemp.jpg
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-######################
-# Visual studio code
-######################
-.vscode
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
 
-######################
-# Delphi
-######################
-/delphi/**/*.exe
-/delphi/**/*.dll
-/delphi/**/*.bpl
-/delphi/**/*.bpi
-/delphi/**/*.dcp
-/delphi/**/*.so
-/delphi/**/*.apk
-/delphi/**/*.drc
-/delphi/**/*.map
-/delphi/**/*.dres
-/delphi/**/*.rsm
-/delphi/**/*.res
-/delphi/**/*.tds
-/delphi/**/*.dcu
-/delphi/**/*.lib
-/delphi/**/*.a
-/delphi/**/*.o
-/delphi/**/*.ocx
-/delphi/**/*.cfg
-/delphi/**/*.hpp
-/delphi/**/*Resource.rc
-/delphi/**/*.local
-/delphi/**/*.identcache
-/delphi/**/*.projdata
-/delphi/**/*.tvsconfig
-/delphi/**/*.dsk
-/delphi/**/__history/
-/delphi/**/__recovery/
-/delphi/**/*.~*
-/delphi/RestServer/RestServer.res
-server/almoxarifado/.apt_generated/
-bin/
+# e2e
+/e2e/*.js
+/e2e/*.map
 
-##########################
-# Electron
-##########################
-/electron/**/dist
-/electron/**/app
-build-info.properties
-client/.vscode/settings.json
-angular2/.vscode/settings.json
-
-##########################
-# DBEAVER
-##########################
-.dbeaver-data-sources.xml
-Scripts/
-
-##########################
-# JREBEL
-##########################
-rebel.xml
+# System Files
+.DS_Store
+Thumbs.db
