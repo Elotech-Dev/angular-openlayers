@@ -18,12 +18,12 @@ export class AppComponent implements OnInit {
     })
   });
 
-  private static PLACE_STYLE  = new ol.style.Style({
-        image: new ol.style.Icon({
-          anchor: [0.5, 1],
-          src: '//cdn.rawgit.com/openlayers/ol3/master/examples/data/icon.png'
-        })
-      });
+  private static PLACE_STYLE = new ol.style.Style({
+    image: new ol.style.Icon({
+      anchor: [0.5, 1],
+      src: '//cdn.rawgit.com/openlayers/ol3/master/examples/data/icon.png'
+    })
+  });
 
   title = '';
   msg = '';
@@ -117,8 +117,6 @@ export class AppComponent implements OnInit {
       this.routes = this.resp.routes[0];
       this.createRoute(this.routes.overview_polyline.points);
     }
-
-    console.log(this.routes);
   }
 
   private createRoute(polyline) {
